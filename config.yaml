@@ -1,0 +1,29 @@
+# Example configuration for the TCGCSV bronze-layer ingestion.
+# Copy this file to config.yaml (or point --config at your own copy) and adjust as needed.
+
+# TCGplayer categoryId to collect, as returned by https://tcgcsv.com/tcgplayer/categories
+# Verify it yourself before changing games -- do not guess it.
+category_id: 71
+
+# Human-readable game name. Also used (lowercased, spaces -> "-") to name the
+# bronze-layer subfolder, e.g. "Lorcana" -> lake/bronze/tcgcsv/lorcana/...
+game_name: "Lorcana"
+
+# Root folder of the data lake (created if missing). Relative paths are resolved
+# against the repository root.
+data_lake_path: "lake"
+
+# Seconds to sleep between HTTP requests (tcgcsv.com asks for pacing, not bursts).
+request_pause_seconds: 0.5
+
+# Number of retries on 5xx / network errors, with exponential backoff.
+retry_count: 3
+
+# Per-request timeout in seconds.
+request_timeout_seconds: 30
+
+# Hard safety cap on total requests in a single run, regardless of retry_count.
+max_requests_per_run: 3000
+
+# Custom User-Agent sent with every request (tcgcsv.com asks for one).
+user_agent: "LorcanaIngest/1.0 (university data lake assignment)"
